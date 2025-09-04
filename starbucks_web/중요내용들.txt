@@ -1,0 +1,20 @@
+HTTP 상태
+  - 500: 서버 코드 오류
+  - 404: 파일을 찾을 수 없음
+  
+html tag 공통속성
+  id: html의 element의 고유한 이름
+  class: css를 적용할 이름
+  name: 백엔드(jsp/java, php, python, nodejs etc...)의 파라미터를 전달할 속성 이름
+  
+html의 input태그의 type이 checkbox, radio, select인 경우의 값들을 가져오는 방법
+  ... 
+
+첨부파일 기능 같은 경우 form의 enctype속성을 multipart로 변경해서 upload하는 기능
+(upload 도와주는 java jar 라이브러리 파일 추가(cos.jar 기타 등등)
+
+기본 저장 내장 객체
+  application
+  session
+  request
+  page

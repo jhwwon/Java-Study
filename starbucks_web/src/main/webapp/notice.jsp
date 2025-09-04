@@ -88,6 +88,7 @@
   			+ "SELECT sno, stitle, sdate, scount "
   			+ "FROM STARBUCKS_NOTICE "
   			;
+		//searchKeyword가 null이 아니고 빈 문자열이 아닐 때
 		if(searchKeyword != null && !searchKeyword.equals("")) {
 			noticeListSql += "WHERE stitle LIKE '%" + searchKeyword + "%' ";
 		}

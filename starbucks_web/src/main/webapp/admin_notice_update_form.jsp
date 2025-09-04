@@ -1,14 +1,41 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import = "java.sql.Connection" %>
+<%@ page import = "java.sql.DriverManager" %>
+<%@ page import = "java.sql.PreparedStatement" %>
+<%@ page import = "java.sql.ResultSet" %>
+<%@ page import = "java.sql.SQLException" %>
+<%@ page import = "com.company1.DBManager" %>    
 <%
-	// 세션 객체에서 작성자가 입력한 값이 있는지 체크
-	//String sessionWriter = (String)session.getAttribute("writer");
-	String sessionWriter = (String)session.getAttribute("user_name");
-	System.out.println("sessionWriter: " + sessionWriter);
+	// sno값을 토대로 수정할 공지사항 데이터 가져오기
+	String sno = request.getParameter("sno");
+	/* 
+	 * DB에서 수정할 공지사항의 정보를 가져옴.
+	 */
+	String writer = null;
+	String title = null;
+	String content = null;
 	
-	// 클라이언트 ip주소 조회
-	String ipAddress = request.getRemoteAddr();
-	System.out.println("ip: " + ipAddress);
+	//DB접속 객체 가져오기
+	Connection conn = DBManager.getDBConnection();
+
+	//DB조회쿼리 실행하여 DB에 있는 데이터 값 가져오기
+	PreparedStatement pstmt = null;
+	ResultSet rs = null;
+	try {
+		String selectSql = "SELECT * FROM starbucks_notice WHERE sno = " + sno;
+		
+		pstmt = conn.prepareStatement(selectSql);
+		rs = pstmt.executeQuery(); // sql실행
+		
+		if (rs.next()) {
+			writer = rs.getString("SWRITER");
+			title = rs.getString("STITLE");
+			content = rs.getString("SCONTENT");
+		}
+	} catch (SQLException se) {
+		System.out.println("공지사항 조회 쿼리 실행 오류: " + se.getMessage());
+	}
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -34,26 +61,26 @@
 <body>
 	<div class="card">
 		<div class="card-header">
-			<h1>스타벅스 공지사항 등록</h1>	
+			<h1>스타벅스 공지사항 수정</h1>	
 		</div>
-		<form action="./admin_notice_insert.jsp" method="post" id="form1" onSubmit="return false">
-			<div class="card-write">
+		<form action="./admin_notice_update.jsp" method="post" id="form1" onSubmit="return false">
+			<input type="hidden" name="sno" value="<%= sno %>" />
+			<div class="card-write"> 
 				<div class="info info-writer">
 					<div>작성자</div>
-					<input type="text" name="writer" value="<%= sessionWriter == null ? "" : sessionWriter %>" readonly/>
+					<input type="text" name="writer" value="<%= writer == null ? "" : writer %>" />
 				</div>
 				<div class="info info-title">
 					<div>제목</div>
-					<input type="text" name="title"/>
+					<input type="text" name="title" value="<%= title == null ? "" : title %>" />
 				</div>
 				<div class="info info-content">
 					<div>내용</div>
-					<textarea name="content"></textarea>
+					<textarea name="content"><%= content == null ? "" : content %></textarea>
 				</div>
 			</div>
 			<div class="card-bottom-btns">
-				<!-- <input type="submit" value="등록" /> -->
-				<a href="javascript: regSubmit();" class="btn">등록</a>
+				<a href="javascript: updateSubmit();" class="btn">수정</a>
 				<a href="./admin_notice_list.jsp" class="btn">취소</a>
 			</div>
 		</form>

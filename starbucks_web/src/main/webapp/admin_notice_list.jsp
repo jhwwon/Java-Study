@@ -8,6 +8,9 @@
 <%@ page import = "com.company1.DBManager" %>
 <%
 	String searchKeyword = request.getParameter("search");
+
+	//session.setAttribute("nickname", "홍길동");  // 각 client마다 session객체에 데이터를 저장(key, value)
+	//session.getAttribute("nickname");		   // 각 client에서 저장한 session객체의 key이름의 값을 조회
 %>    
 <!DOCTYPE html>
 <html lang="en">
@@ -79,9 +82,12 @@
 			<div class="content-items">
 				<div><%= rs.getInt("SNO") %></div>
                 <div><%= rs.getString("STITLE") %></div>
-                <div></div>
+                <div><%= rs.getString("SWRITER") != null ? rs.getString("SWRITER") : "" %></div>
                 <div>
-                	
+                	<!-- 수정버튼 -->
+                	<button style="cursor: pointer;" onClick="javascript: moveUpdate(<%= rs.getInt("SNO") %>);">수정</button>
+                	<!-- 삭제버튼 -->
+                	<button style="cursor: pointer;" onClick="javascript: deleteNotice(<%= rs.getInt("SNO") %>);">삭제</button>
                	</div>
 			</div>
 		<%

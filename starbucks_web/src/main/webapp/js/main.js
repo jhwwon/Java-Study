@@ -147,7 +147,6 @@ floatingObject('.floating2', .5, 15);
 floatingObject('.floating3', 1.5, 20);
 
 
-
 // 하단 수상 swiper 슬라이드 사용
 new Swiper('.awards .swiper-container', {
   slidesPerView: 5, // 한번에 보여줄 슬라이드 개수

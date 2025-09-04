@@ -24,3 +24,19 @@ VALUES (SEQ_SNO.NEXTVAL, '일회용컵 사용 제한', '환경 보호를 위해 
 
 -- 작성자 컬럼 추가
 ALTER TABLE STARBUCKS_NOTICE ADD SWRITER varchar2(100) NULL;
+
+-- 스타벅스 백오피스 사용자 테이블
+CREATE TABLE STARBUCKS_BO_USERS (
+	user_no       NUMBER            PRIMARY KEY,		-- 백오피스 사용자 번호
+	user_id       varchar2(100)	    NOT NULL,			-- 백오피스 사용자 아이디
+	user_pw       varchar2(100)     NOT NULL,       	-- 백오피스 사용자 패스워드
+	user_name     varchar2(100),       -- 백오피스 사용자 이름
+	user_email    varchar2(100)        -- 백오피스 사용자 이메일
+);
+
+INSERT INTO STARBUCKS_BO_USERS (user_no, user_id, user_pw, user_name, user_email)
+VALUES (1, 'admin', 'admin123', '관리자1', 'admin@star.com');
+INSERT INTO STARBUCKS_BO_USERS (user_no, user_id, user_pw, user_name, user_email)
+VALUES (2, 'manager', 'manager123', '매니저1', 'manager@star.com');
+INSERT INTO STARBUCKS_BO_USERS (user_no, user_id, user_pw, user_name, user_email)
+VALUES (3, 'staff', 'staff123', '직원1', 'staff@asdf.com');
