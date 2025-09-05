@@ -13,3 +13,4 @@ public class DaoExample {
 		dbWork(new MySqlDao());
 	}
 }
+
